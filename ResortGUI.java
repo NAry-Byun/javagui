@@ -163,7 +163,7 @@ public class ResortGUI extends JFrame {
     }
 
     // Populate initial data
-    private void populateLists() {
+    void populateLists() {
         rooms.add(new Room("Single", 125));
         rooms.add(new Room("Double", 200));
 
@@ -245,4 +245,108 @@ class TravelPackage {
       cr.setLocationRelativeTo((Component)null);
       cr.setVisible(true);
    }
-}
+   class ButtonHandler implements ActionListener{
+    public void actionPerformed(ActionEvent e){
+     if(e.getSource() == btnDisplay){
+       int index = roomsList.getSelectedIndex();
+          if(index !=-1){
+            lblDisplay.setIcon(icons[index]);
+            lblDisplay.setText("Click clear selection");
+          }
+     }
+      if(e.getSource() == btnCAdd){
+      //read the data
+      String name = txtCName.getText();
+      System.out.println(name);
+      Customer customer = new Customer(name);
+      System.out.println(customer);
+      customers.add(customer);
+      customersModel.addElement(customer);
+      //clear the text fields
+      txtName.setText("");
+       
+     }
+     if(e.getSource() == btnRemove){
+       int index = roomsList.getSelectedIndex();
+          if(index !=-1){
+            roomsModel.remove(index);
+            rooms.remove(index);
+          }
+     }
+    if(e.getSource() == btnCRemove){
+       int index = customersList.getSelectedIndex();
+          if(index !=-1){
+            customersModel.remove(index);
+            customers.remove(index);
+          }
+     }
+     if(e.getSource() == btnBRemove){
+       int index = bookingsList.getSelectedIndex();
+          if(index !=-1){
+            bookingsModel.remove(index);
+            bookings.remove(index);
+          }
+     }
+     if(e.getSource() == btnClear){
+       roomsList.clearSelection();
+       lblDisplay.setIcon(null);
+      }
+      if(e.getSource() == btnCClear){
+       customersList.clearSelection();
+       
+      }
+      if(e.getSource() == btnBClear){
+       bookingsList.clearSelection();
+      }
+     if(e.getSource() == btnBAdd){
+       Booking booking = null;
+      //get room and customer from the lists
+      Room room = roomsList.getSelectedValue();
+      Customer customer = customersList.getSelectedValue();
+      if(room != null && customer!=null){
+        booking = new Booking(room, customer);
+      //read other data
+        try{
+        String date = txtDate.getText();
+        booking.setDateFromString(date);
+       
+        String daysStr = txtDays.getText();
+        int days = 0;
+        if(daysStr!=""){
+         days = Integer.parseInt(daysStr);
+        }
+       /*else{
+         JOptionPane.showMessageDialog(null, "Please enter duration in days");
+         txtDays.setText("Please enter duration in days");
+       }*/
+        booking.setDays(days);
+        bookings.add(booking);
+        bookingsModel.addElement(booking);
+        room.setAvailability(false);
+          //clear the text fields
+      txtDate.setText("");
+      txtDays.setText("");
+      }
+      catch(Exception ee){
+          System.out.println(ee.getMessage());
+          Booking.nextID--;
+       }
+     }
+      else
+        JOptionPane.showMessageDialog(null, "Please select a room and a customer from lists");
+    }
+     if(e.getSource() == btnBCheckOut){
+        Booking b = bookingsList.getSelectedValue();
+        if(b!=null){
+         double cost = calculateTotalCost(b);
+         //if(!b.getIsPaid()){
+         // JOptionPane.showMessageDialog(null, "You have to pay " + cost + "$");
+        }
+        else{
+             JOptionPane.showMessageDialog(null, "Please select a booking from the list");
+         }
+    }
+      
+   }
+  }
+  
