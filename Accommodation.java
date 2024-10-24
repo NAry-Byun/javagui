@@ -4,7 +4,7 @@ import java.io.*;
 
 public class Accommodation implements Serializable {
 
-    public static class Room {
+    public static class Room implements Serializable {
         private String code;             
         private String name;            
         private String type;             

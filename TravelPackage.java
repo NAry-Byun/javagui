@@ -2,14 +2,15 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class TravelPackage implements Serializable {
-    private static int nextID = 10;
+    static int nextID = 10;
     private int travelPackageId;
     private Customer customer;
     private Accommodation.Room room;
     private LocalDate startDate;
     private int duration;
-    private double totalCost;
-    private boolean isPaid;
+    private int dayLiftPass;
+    private boolean seasonPass;
+    private int lessons;
 
     public TravelPackage(Accommodation.Room room, Customer customer) {
         this.room = room;
@@ -41,20 +42,71 @@ public class TravelPackage implements Serializable {
         this.duration = duration;
     }
 
-    public void setTotalCost(double totalCost) {
-        this.totalCost = totalCost;
+    public int getDayLiftPass() {
+        return dayLiftPass;
     }
 
-    public double getTotalCost() {
-        return totalCost;
+    public void setDayLiftPass(int dayLiftPass) {
+        this.dayLiftPass = dayLiftPass;
     }
 
-    public void setIsPaid(boolean isPaid) {
-        this.isPaid = isPaid;
+    public boolean isSeasonPass() {
+        return seasonPass;
     }
+
+    public void setSeasonPass(boolean seasonPass) {
+        this.seasonPass = seasonPass;
+    }
+
+    public int getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(int lessons) {
+        this.lessons = lessons;
+    }
+
+    public double getliftCost() {
+        int lCost = 0;
+        if(this.isSeasonPass()) {
+            lCost += 200.00;
+        }
+        if(this.dayLiftPass < 5) {
+            lCost += this.dayLiftPass * 26;
+        }
+        else {
+            lCost += this.dayLiftPass * 26 * 0.9;
+        }
+        return lCost;
+    }
+
+    public double getLessonCost() {
+        int lnCost = 0;
+        if(this.customer.getLevel().equals("Beginner")) {
+            lnCost += this.lessons * 25;
+        }
+        else if(this.customer.getLevel().equals("Intermediate")) {
+            lnCost += this.lessons * 20;
+        }
+        else if (this.customer.getLevel().equals("Advanced")) {
+            lnCost += this.lessons * 15;
+        }
+
+        return lnCost;
+    }
+
+    public double getRoomCost() {
+        return this.duration * room.getPricePerDay();
+    }
+
 
     @Override
     public String toString() {
-        return customer + " booked " + room + " for " + duration + " days starting " + startDate;
+        return "<html>" + "<br/>" +
+        customer + "<br/>" +
+         room + "<br/>" +
+         " for " + duration + " days starting " + startDate + " will be cost " + this.getRoomCost() + "<br/>" + 
+         "Lift cost will be " + this.getliftCost() + "<br/>" + 
+         "Lessons cost will be "+ this.getLessonCost() + "</html>";
     }
 }
