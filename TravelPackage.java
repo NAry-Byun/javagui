@@ -5,13 +5,13 @@ public class TravelPackage implements Serializable {
     private static int nextID = 10;
     private int travelPackageId;
     private Customer customer;
-    private Room room;
+    private Accommodation.Room room;
     private LocalDate startDate;
     private int duration;
     private double totalCost;
     private boolean isPaid;
 
-    public TravelPackage(Room room, Customer customer) {
+    public TravelPackage(Accommodation.Room room, Customer customer) {
         this.room = room;
         this.customer = customer;
         this.travelPackageId = nextID++;
@@ -25,7 +25,7 @@ public class TravelPackage implements Serializable {
         return customer;
     }
 
-    public Room getRoom() {
+    public Accommodation.Room getRoom() {
         return room;
     }
 

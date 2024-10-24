@@ -1,4 +1,5 @@
-public class Customer {
+import java.io.*;
+public class Customer implements Serializable {
     private int custId;
     private String name;
     private String level;

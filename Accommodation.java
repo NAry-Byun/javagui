@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
-public class Accommodation {
+public class Accommodation implements Serializable {
 
     public static class Room {
         private String code;             
@@ -19,6 +20,11 @@ public class Accommodation {
             this.name = name;
             this.type = type;
             this.pricePerDay = pricePerDay;
+            this.roomNo = nextId++;
+        }// Constructor with code, name, type, and price
+
+        public Room(String name) {
+            this.name = name;
             this.roomNo = nextId++;
         }// Constructor with code, name, type, and price
 
@@ -64,70 +70,4 @@ public class Accommodation {
         }
     }
 
-    // List to store all accommodations
-    private List<Room> rooms;
-
-    // Constructor to initialize the list of accommodations
-    public Accommodation() {
-        rooms = new ArrayList<>();
-        initializeRooms(); // Populates the list with predefined rooms
-    }
-
-    // Method to initialize the rooms with predefined accommodations
-    private void initializeRooms() {
-        // Apartments
-        rooms.add(new Room("A-1", "Moose Apartment", "Apartment", 150));
-        rooms.add(new Room("A-2", "The Park Apartment", "Apartment", 180));
-        rooms.add(new Room("A-3", "White Horse Apartment", "Apartment", 200));
-
-        // Hotels
-        rooms.add(new Room("H-1", "Abom Hotel", "Hotel", 110));
-        rooms.add(new Room("H-2", "Duck Inn Hotel", "Hotel", 320));
-        rooms.add(new Room("H-3", "Breath Take Hotel", "Hotel", 730));
-
-        // Lodges
-        rooms.add(new Room("L-1", "Awsc Lodge", "Lodge", 150));
-        rooms.add(new Room("L-2", "The Bike Lodge", "Lodge", 180));
-        rooms.add(new Room("L-3", "Amber Lodge", "Lodge", 200));
-    }
-
-    // Method to get all rooms
-    public List<Room> getRooms() {
-        return rooms; // Ensures getRooms() method is defined
-    }
-
-    // Method to find a room by its code
-    public Room findRoomByCode(String code) {
-        for (Room room : rooms) {
-            if (room.getCode().equalsIgnoreCase(code)) {
-                return room;
-            }
-        }
-        return null;
-    }
-
-    // Display all rooms
-    public void displayAllRooms() {
-        for (Room room : rooms) {
-            System.out.println(room);
-        }
-    }
-
-    // Display available rooms
-    public void displayAvailableRooms() {
-        for (Room room : getAvailableRooms()) {
-            System.out.println(room);
-        }
-    }
-
-    // Method to get all available rooms
-    public List<Room> getAvailableRooms() {
-        List<Room> availableRooms = new ArrayList<>();
-        for (Room room : rooms) {
-            if (room.isAvailable()) {
-                availableRooms.add(room);
-            }
-        }
-        return availableRooms;
-    }
 }
