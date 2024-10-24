@@ -52,6 +52,7 @@ public class ResortGUI extends JFrame {
     JButton btnDisplay = new JButton("Display selected");
     JButton btnDispalyAll = new JButton("Display All Rooms");
     JButton btnDispalyAvailable = new JButton("Display Available Rooms");
+    JButton btnDeletePackage = new JButton("Delete Package");
 
     JPanel inputBPanel = new JPanel();
     JTextField txtDate = new JTextField(10);
@@ -130,6 +131,7 @@ public class ResortGUI extends JFrame {
         TravelPackagesTab.add(new JScrollPane(TravelPackagesList), BorderLayout.CENTER);
         packageButtonPanel.add(btnBAdd);
         packageButtonPanel.add(btnDiaplayPackages);
+        packageButtonPanel.add(btnDeletePackage);
         packageButtonPanel.add(btnSavePg);
         packageButtonPanel.add(btnReadPg);
         TravelPackagesTab.add(packageButtonPanel, BorderLayout.SOUTH);
@@ -187,6 +189,7 @@ public class ResortGUI extends JFrame {
         btnDispalyAvailable.addActionListener(bh);
         btnBAdd.addActionListener(bh);
         btnDiaplayPackages.addActionListener(bh);
+        btnDeletePackage.addActionListener(bh);
         btnReadPg.addActionListener(bh);
         btnSavePg.addActionListener(bh);
         btnAddCustomer.addActionListener(bh);
@@ -253,7 +256,17 @@ public class ResortGUI extends JFrame {
                 }
                 roomsList.repaint();
             }
-
+            if (e.getSource() == btnDeletePackage) {
+                TravelPackage selectedPackage = TravelPackagesList.getSelectedValue();
+                if (selectedPackage != null) {
+                    TravelPackages.remove(selectedPackage);
+                    TravelPackagesModel.removeElement(selectedPackage);
+                    JOptionPane.showMessageDialog(null, "Package deleted successfully.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please select a package to delete.");
+                }
+            }
+            
             //Display only available rooms
                if(e.getSource() == btnDispalyAvailable) {
                     roomsModel.clear();
