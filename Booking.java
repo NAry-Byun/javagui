@@ -4,9 +4,7 @@ public class Booking {
     public static int nextID;
 
 
-    public Booking(Room room, Customer customer) {
-        //TODO Auto-generated constructor stub
-    }
+
 
     public Booking(Room room, Customer customer) {
         //TODO Auto-generated constructor stub

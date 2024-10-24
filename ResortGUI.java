@@ -13,8 +13,8 @@ public class ResortGUI extends JFrame  {
  
 // Define the Booking class separately
 class Booking {
-    private Room room;
-    private Customer customer;
+    private Room[] room;
+    private Customer[] customer;
     private String date;
     private int days;
     private double totalCost;
@@ -29,11 +29,11 @@ class Booking {
     }
 
     // Getters and setters for the fields
-    public Room getRoom() {
+    public Room[] getRoom() {
         return room;
     }
 
-    public Customer getCustomer() {
+    public Customer[] getCustomer() {
         return customer;
     }
 
@@ -255,8 +255,8 @@ class Booking {
    }
    public double calculateTotalCost(Booking b){
      int duration = b.getDuration();
-     Room r = b.getRoom();
-     double totalCost = duration * r.getPricePerDay();
+     Room[] r = b.getRoom();
+     double totalCost = duration * r.length;
         if(chkBreakfast.isSelected())
            totalCost +=b.getBreakfast()*duration;
        b.setTotalCost(totalCost);
