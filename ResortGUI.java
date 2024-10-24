@@ -22,7 +22,13 @@ public class ResortGUI extends JFrame {
         new ImageIcon("images/bunker.jpg"), 
         new ImageIcon("images/double.jpg"),
         new ImageIcon("images/family.png"),
-        new ImageIcon("images/queen.jpg")
+        new ImageIcon("images/queen.jpg"),
+        new ImageIcon("images/comportable.jpg"),
+        new ImageIcon("images/king.jpg"),
+        new ImageIcon("images/king2.jpg"),
+        new ImageIcon("images/luxury.jpg"),
+        new ImageIcon("images/suitroom.jpg"),
+        new ImageIcon("images/twin.jpeg")
     };
 
     Accommodation rfound = null;

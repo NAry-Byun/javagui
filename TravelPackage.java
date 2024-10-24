@@ -66,47 +66,50 @@ public class TravelPackage implements Serializable {
         this.lessons = lessons;
     }
 
-    public double getliftCost() {
-        int lCost = 0;
-        if(this.isSeasonPass()) {
-            lCost += 200.00;
+    public double getLiftCost() {
+        double liftCost = 0;
+        if (this.isSeasonPass()) {
+            liftCost += 200.00;
         }
-        if(this.dayLiftPass < 5) {
-            lCost += this.dayLiftPass * 26;
+        if (this.dayLiftPass < 5) {
+            liftCost += this.dayLiftPass * 26;
+        } else {
+            liftCost += this.dayLiftPass * 26 * 0.9;
         }
-        else {
-            lCost += this.dayLiftPass * 26 * 0.9;
-        }
-        return lCost;
+        return liftCost;
     }
 
     public double getLessonCost() {
-        int lnCost = 0;
-        if(this.customer.getLevel().equals("Beginner")) {
-            lnCost += this.lessons * 25;
+        double lessonCost = 0;
+        switch (this.customer.getLevel()) {
+            case "Beginner":
+                lessonCost += this.lessons * 25;
+                break;
+            case "Intermediate":
+                lessonCost += this.lessons * 20;
+                break;
+            case "Advanced":
+                lessonCost += this.lessons * 15;
+                break;
         }
-        else if(this.customer.getLevel().equals("Intermediate")) {
-            lnCost += this.lessons * 20;
-        }
-        else if (this.customer.getLevel().equals("Advanced")) {
-            lnCost += this.lessons * 15;
-        }
-
-        return lnCost;
+        return lessonCost;
     }
 
     public double getRoomCost() {
         return this.duration * room.getPricePerDay();
     }
 
+    public double getTotalCost() {
+        return getRoomCost() + getLiftCost() + getLessonCost();
+    }
 
     @Override
     public String toString() {
-        return "<html>" + "<br/>" +
-        customer + "<br/>" +
-         room + "<br/>" +
-         " for " + duration + " days starting " + startDate + " will be cost " + this.getRoomCost() + "<br/>" + 
-         "Lift cost will be " + this.getliftCost() + "<br/>" + 
-         "Lessons cost will be "+ this.getLessonCost() + "</html>";
+        return String.format(
+            "<html><br/>Customer: %s<br/>Room: %s<br/>Duration: %d days<br/>" +
+            "Start Date: %s<br/>Room Cost: $%.2f<br/>Lift Cost: $%.2f<br/>" +
+            "Lesson Cost: $%.2f<br/>Total Cost: $%.2f</html>",
+            customer, room, duration, startDate, getRoomCost(), getLiftCost(), getLessonCost(), getTotalCost()
+        );
     }
 }
